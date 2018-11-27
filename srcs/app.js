@@ -1,8 +1,8 @@
-class Menu extends React.Component {
+class Headmenu extends React.Component {
   render() {
     return (
-      <div className="menu">
-        <ul className="menulist">
+      <div className="headmenu">
+        <ul className="headmenulist">
           <li><a href="#">USERS</a></li>
           <li><a href="#">LINKS</a></li>
           <li><a href="#">COLLECTIONS</a></li>
@@ -17,20 +17,35 @@ class Header extends React.Component {
     return (
       <div className="header">
         <h1>MY POCKET</h1>
-        <Menu />
+        <Headmenu />
       </div>
     )
   }
 }
 
+class Menu extends React.Component {
+  render() {
+    return (
+      <li><a href="#" className="singlemenu">
+          <span className="leftmenupart">
+            <img width="30" src={this.props.icon}/>
+          </span>
+          <span className="rightmenupart">
+            {this.props.name}
+          </span>
+      </a></li>
+    );
+  }
+}
+
 class Sidemenu extends React.Component {
   render() {
+    const listMenus = this.props.menus.map( m => <Menu key={m.id} name={m.name} icon={m.icon} /> );
+
     return (
       <div className="sidemenu">
         <ul className="sidemenulist">
-        <li><a href="#">USERS</a></li>
-        <li><a href="#">LINKS</a></li>
-        <li><a href="#">COLLECTIONS</a></li>
+          {listMenus}
         </ul>
       </div>
     );
@@ -60,7 +75,6 @@ class Tag extends React.Component {
 class Link extends React.Component {
   createTagsList() {
     const tags = ['Videos','Information','Article','Books','Movies'];
-
     const tagsList = tags.map( (t) => <Tag key={t} tagname={t} /> );
     return tagsList;
   }
@@ -110,6 +124,12 @@ class Footer extends React.Component {
   }
 }
 
+const menus = [
+                {name: 'USERS', icon:'./public/img/icon1.png'},
+                {name: 'LINKS', icon:'./public/img/icon2.png'},
+                {name: 'COLLECTIONS', icon:'./public/img/icon3.png'},
+              ];
+
 class App extends React.Component {
   render() {
     return (
@@ -117,7 +137,7 @@ class App extends React.Component {
         <Header />
         <div className="content">
           <div className="leftcol">
-            <Sidemenu />
+            <Sidemenu menus={menus}/>
           </div>
           <div className="rightcol">
             <div className='section users'>

@@ -70,7 +70,7 @@ h1,h2,h3,h4,h5,h6 {
 
 .leftcol {
   width: 250px;
-  height: 100vh;
+
 }
 
 .rightcol {
@@ -118,8 +118,23 @@ a {
 
 .footer {
   width: 100%;
-  height: 200px;
+  height: 120px;
   border-top: 1px solid white;
   background: #020d1e;
-  margin-top: 3em;
+}
+
+/***************************************/
+/***          EVENT CLASSES          ***/
+/***************************************/
+
+.users {
+
+}
+
+.links {
+
+}
+
+.collections {
+
 }

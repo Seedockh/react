@@ -24,9 +24,16 @@ class Header extends React.Component {
 }
 
 class Menu extends React.Component {
+  switchLink(e) {
+    e.preventDefault();
+    const target = e.target.innerText.toLowerCase(); //get clicked menu
+    console.log(target);
+    console.log(ReactDOM.findDOMNode('div').getElementsByClassName(target));
+  }
+
   render() {
     return (
-      <li><a href="#" className="singlemenu">
+      <li><a href="#" onClick={this.switchLink} className="singlemenu">
           <span className="leftmenupart">
             <img width="30" src={this.props.icon}/>
           </span>
@@ -125,9 +132,9 @@ class Footer extends React.Component {
 }
 
 const menus = [
-                {name: 'USERS', icon:'./public/img/icon1.png'},
-                {name: 'LINKS', icon:'./public/img/icon2.png'},
-                {name: 'COLLECTIONS', icon:'./public/img/icon3.png'},
+                {id: 1, name: 'USERS', icon:'./public/img/icon1.png'},
+                {id: 2, name: 'LINKS', icon:'./public/img/icon2.png'},
+                {id: 3, name: 'COLLECTIONS', icon:'./public/img/icon3.png'},
               ];
 
 class App extends React.Component {
@@ -150,7 +157,7 @@ class App extends React.Component {
               <User id='5' nickname="Jean-Pierre" mail='jplegueux@bg.com' />
             </div>
             <br/>
-            <div className='section links'>
+            <div className='section links' hidden>
               <h2>All Links</h2>
               <hr /><br/>
               <Link id='1' url='youtube.com'/>
@@ -160,7 +167,7 @@ class App extends React.Component {
               <Link id='5' url='react.com'/>
             </div>
             <br/>
-            <div className='section collections'>
+            <div className='section collections' hidden>
               <h2>All Collections</h2>
               <hr /><br/>
               <Collection id='1'/>

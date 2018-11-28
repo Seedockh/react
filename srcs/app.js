@@ -1,3 +1,105 @@
+let displayToggles = {
+  hideusers : false,
+  hidelinks : true,
+  hidecollections : true
+}
+
+class Container extends React.Component {
+  render() {
+    return (
+      <div id='container' className='container'>
+        <Header />
+        <Content />
+        <Footer />
+      </div>
+    );
+  }
+}
+
+class Content extends React.Component {
+  render() {
+    return (
+      <div className="content">
+        <LeftCol />
+        <RightCol />
+      </div>
+    );
+  }
+}
+
+class LeftCol extends React.Component {
+  render() {
+    return (
+      <div className="leftcol">
+        <Sidemenu menus={menus}/>
+      </div>
+    )
+  }
+}
+
+class RightCol extends React.Component {
+  // constructor() {
+  //   super(props);
+  //   this.state = {
+  //
+  //   }
+  // }
+
+  render() {
+    console.log('Rerender RightCol');
+    return (
+      <div className="rightcol">
+        <AllUsers hide={displayToggles.hideusers}/>
+        <AllLinks hide={displayToggles.hidelinks}/>
+        <AllCollections hide={displayToggles.hidecollections}/>
+      </div>
+    )
+  }
+}
+
+class AllUsers extends React.Component {
+  render() {
+    return (
+      <div className='section users' hidden={this.props.hide}>
+        <h2>All Users</h2>
+        <User id='1' nickname="Jacquard Le Gueux" mail='jacquard@lvstr.com' />
+        <User id='2' nickname="Dame Ginette" mail='dg@lvstr.com' />
+        <User id='3' nickname="Cousin Hub'" mail='hubofmontmirail@lvstr.com' />
+        <User id='4' nickname="Dame Béatrice" mail='beaofmontrailmi@lvstr.com' />
+        <User id='5' nickname="Jean-Pierre" mail='jplegueux@bg.com' />
+      </div>
+    )
+  }
+}
+
+class AllLinks extends React.Component {
+  render() {
+    return (
+      <div className='section links' hidden={this.props.hide}>
+        <h2>All Links</h2>
+        <Link id='1' url='youtube.com'/>
+        <Link id='2' url='google.com'/>
+        <Link id='3' url='facebook.com'/>
+        <Link id='4' url='slack.com'/>
+        <Link id='5' url='react.com'/>
+      </div>
+    )
+  }
+}
+
+class AllCollections extends React.Component {
+  render() {
+    return (
+      <div className='section collections' hidden={this.props.hide}>
+        <h2>All Collections</h2>
+        <Collection id='1'/>
+        <Collection id='2'/>
+        <Collection id='3'/>
+      </div>
+    )
+  }
+}
+
 class Headmenu extends React.Component {
   render() {
     return (
@@ -27,8 +129,14 @@ class Menu extends React.Component {
   switchLink(e) {
     e.preventDefault();
     const target = e.target.innerText.toLowerCase(); //get clicked menu
-    console.log(target);
-    console.log(ReactDOM.findDOMNode('div').getElementsByClassName(target));
+    if (target==="users") {
+      displayToggles = { hideusers : false, hidelinks : true, hidecollections : true };
+    } else if (target==="links") {
+      displayToggles = { hideusers : true, hidelinks : false, hidecollections : true };
+    } else if (target==="collections") {
+      displayToggles = { hideusers : true, hidelinks : true, hidecollections : false };
+    }
+    console.log(displayToggles);
   }
 
   render() {
@@ -41,6 +149,7 @@ class Menu extends React.Component {
             {this.props.name}
           </span>
       </a></li>
+
     );
   }
 }
@@ -140,47 +249,7 @@ const menus = [
 class App extends React.Component {
   render() {
     return (
-      <div className='container'>
-        <Header />
-        <div className="content">
-          <div className="leftcol">
-            <Sidemenu menus={menus}/>
-          </div>
-          <div className="rightcol">
-            <div className='section users'>
-              <h2>All Users</h2>
-              <hr /><br/>
-              <User id='1' nickname="Jacquard Le Gueux" mail='jacquard@lvstr.com' />
-              <User id='2' nickname="Dame Ginette" mail='dg@lvstr.com' />
-              <User id='3' nickname="Cousin Hub'" mail='hubofmontmirail@lvstr.com' />
-              <User id='4' nickname="Dame Béatrice" mail='beaofmontrailmi@lvstr.com' />
-              <User id='5' nickname="Jean-Pierre" mail='jplegueux@bg.com' />
-            </div>
-            <br/>
-            <div className='section links' hidden>
-              <h2>All Links</h2>
-              <hr /><br/>
-              <Link id='1' url='youtube.com'/>
-              <Link id='2' url='google.com'/>
-              <Link id='3' url='facebook.com'/>
-              <Link id='4' url='slack.com'/>
-              <Link id='5' url='react.com'/>
-            </div>
-            <br/>
-            <div className='section collections' hidden>
-              <h2>All Collections</h2>
-              <hr /><br/>
-              <Collection id='1'/>
-              <br/>
-              <Collection id='2'/>
-              <br/>
-              <Collection id='3'/>
-              <br/>
-            </div>
-          </div>
-        </div>
-      <Footer />
-      </div>
+      <Container />
     );
   }
 }
